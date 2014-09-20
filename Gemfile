@@ -40,4 +40,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 group :production do
   gem 'pg'
+      gem 'rails_12factor'
+
 end
