@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 root "pages#home"
 
-  get 'pages/search'
 get "search" => "pages#search"
 
   get 'parsetest/*searchTerm' => 'wikiparse#parseSearch'
