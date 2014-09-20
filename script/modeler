@@ -1,4 +1,4 @@
 #!/bin/bash
 
-rails generate model ENTRY ID:integer NODE:string
-rails generate model RELATIONSHIP ID:integer PARENT_ENTRY_ID:integer CHILD_ENTRY_ID:integer TYPE:stringhttps://github.com/teamknowledgemap/KnowledgeMap.git
+rails generate model ENTRY id:integer node:string
+rails generate model RELATIONSHIP id:integer parent:integer child:integer type:string

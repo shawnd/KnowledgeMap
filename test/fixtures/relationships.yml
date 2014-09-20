@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  ID: 1
-  PARENT_ENTRY_ID: 1
-  CHILD_ENTRY_ID: 1
-  TYPE: 
+  id: 1
+  parent: 1
+  child: 1
+  type: 
 
 two:
-  ID: 1
-  PARENT_ENTRY_ID: 1
-  CHILD_ENTRY_ID: 1
-  TYPE: 
+  id: 1
+  parent: 1
+  child: 1
+  type: 
