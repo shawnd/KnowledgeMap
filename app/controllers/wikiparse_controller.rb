@@ -7,7 +7,10 @@ class WikiparseController < ApplicationController
         return URI(wikiURL)
     end
 
-    def parseSearch(inputURL)
+    def parseSearch
+        inputURL = params[:searchTerm]
+        print(params[:searchTerm])
+        print(inputURL)
         source = Net::HTTP.get(searchBuild(inputURL))
 
         sourceHead = 0
