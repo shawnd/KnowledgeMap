@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ID: 
+  Parent_Entry_ID: 
+  Child_Entry_ID: 
+  Type_ID: 
+
+two:
+  ID: 
+  Parent_Entry_ID: 
+  Child_Entry_ID: 
+  Type_ID: 
