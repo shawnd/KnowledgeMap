@@ -4,6 +4,7 @@ root "pages#home"
   get 'pages/search'
 get "search" => "pages#search"
 
+  get 'parsetest/:inputURL' => 'wikiparse#parseSearch'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

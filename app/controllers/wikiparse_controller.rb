@@ -3,11 +3,12 @@ class WikiparseController < ApplicationController
     require 'net/http'
 
     def searchBuild(searchString)
-        WIKI_EDIT_URL = 'https://en.wikipedia.org/w/index.php?title=' +                               searchString + '&action=edit'
+        wikiURL = 'https://en.wikipedia.org/w/index.php?title=' + searchString + '&action=edit'
+        return URI(wikiURL)
     end
 
-    def parse(inputURL)
-        source = Net::HTTP.get(URI(searchBuild(inputURL)))
+    def parseSearch(inputURL)
+        source = Net::HTTP.get(searchBuild(inputURL))
 
         sourceHead = 0
         sourceTail = 0
@@ -32,8 +33,19 @@ class WikiparseController < ApplicationController
                 end
             end
         end
-        
-        
+        searchForCallback(entryHash.keys, entryHash.values)
+        #for every hash entry we want to get and search the related page for an entry back to the original page (if found then store in DB)
+        print ("text")
     end
+    
+    def searchForCallback(searchArray, valueArray)
+        for i in 0..searchArray.length
+            source = Net::HTTP.get(searchBuild(searchArray[i]))
+            if source.include? entry
+                #create DB tuple for entry and valueArray[i]
+            end
+        end        
+    end
+        
 end
     
