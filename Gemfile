@@ -26,7 +26,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'bootstrap-sass'
 
 
-
+gem 'pry'
 
 group :development do
   gem 'sqlite3', '~> 1.3.9'

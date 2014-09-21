@@ -1,3 +1,7 @@
 class Entry < ActiveRecord::Base
-	self.primary_key = "node"
+	has_many :parents, through: :relationships, source: :entries
+    has_many :children, through: :relatoinships, source: :entries
+    
+    self.primary_key = "node"
+    
 end

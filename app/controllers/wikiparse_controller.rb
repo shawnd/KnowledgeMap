@@ -53,7 +53,7 @@ class WikiparseController < ApplicationController
                 end
             end
         end
-        Entry.create(:node => searchString)
+        parent = Entry.create(:node => searchString)
         searchForCallback(entryHash.keys, entryHash.values)
         #for every hash entry we want to get and search the related page for an entry back to the original page (if found then store in DB)
         redirect_to "/"
@@ -83,7 +83,7 @@ class WikiparseController < ApplicationController
             largestKeys = Array.new #array storing largest value keys
             keysLeft = SEARCH_LIMIT #how many of the largest keys left to find
             max = 0 #largest array item
-            
+
             while keysLeft > 0 && keysLeft < len
                 for i in 0..len
                     if valueArray[i].to_i > valueArray[max].to_i
@@ -98,7 +98,7 @@ class WikiparseController < ApplicationController
                     
             for i in 0..SEARCH_LIMIT
                 print "\nLargest Value: " + searchArray[i].to_s + "\n"
-                Entry.create(:node => searchArray[i])
+                #Entry.create(:node => searchArray[i])
             end
         end
         
