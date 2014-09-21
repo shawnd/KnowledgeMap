@@ -1,7 +1,7 @@
 #Controller to parse wikipedia and determine subjects (their parents, and children)
 class WikiparseController < ApplicationController
     require 'net/http'
-    
+
     SEARCH_LIMIT = 5
 
     def parseSearch
@@ -14,7 +14,10 @@ class WikiparseController < ApplicationController
 
         elsif source.include? '#REDIRECT'
             searchString = rmDBrakets source[source.index('#REDIRECT')..-1]
+            print "SEARCH STRING: " + searchString
             source = redirectWiki(searchString)
+        else
+            searchString = inputURL
         end
         
         source = source.partition("==Notes==")[0]
@@ -50,6 +53,7 @@ class WikiparseController < ApplicationController
                 end
             end
         end
+        Entry.create(:node => searchString)
         searchForCallback(entryHash.keys, entryHash.values)
         #for every hash entry we want to get and search the related page for an entry back to the original page (if found then store in DB)
         redirect_to "/"
@@ -92,18 +96,10 @@ class WikiparseController < ApplicationController
                 max = 0
             end
                     
-            print "LARGEST: " + largestKeys[0].to_s
-            print "LARGEST: " + largestKeys[1].to_s
-            print "LARGEST: " + largestKeys[2].to_s
-            print "LARGEST: " + largestKeys[3].to_s
-            print "LARGEST: " + largestKeys[4].to_s
-            #limit to SEARCH_LIMIT
-            
-#            for i in 0..(len.to_i-1)
-#                source = Net::HTTP.get(searchBuild(searchArray[i]))
-#                if source.include? searchArray[i]
-#                end
-#            end        
+            for i in 0..SEARCH_LIMIT
+                print "\Largest Value: " + valueArray[i].to_s
+                Entry.create(:node => searchArray[i])
+            end
         end
         
 end

@@ -12,7 +12,7 @@
   	if node == nil
   		# WikiparseController.parseSearch
   	else 
-  		nodes = Entry.where(node: searchString, type: "child").take(5)
+  		@nodes = Entry.where(node: searchString, type: "child").take(5)
   	end
   		
   end
