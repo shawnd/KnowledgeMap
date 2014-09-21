@@ -22,7 +22,6 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
-gem 'ransack'
 
 gem 'bootstrap-sass'
 
@@ -30,13 +29,12 @@ gem 'bootstrap-sass'
 
 
 group :development do
-gem install 'sqlite3'
+  gem 'sqlite3', '~> 1.3.9'
 end
  
 
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
-gem install sqlite3 -v '1.3.9'
 group :production do
   gem 'pg'
 gem 'rails_12factor'
