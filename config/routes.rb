@@ -3,7 +3,7 @@ root "pages#home"
 
 get "search" => "pages#search"
 
-  get 'parsetest/*searchTerm' => 'wikiparse#parseSearch'
+  get 'parsetest' => 'wikiparse#parseSearch'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -20,9 +20,11 @@
 	    
 	    <div id="search">
 	      <div id="searchField" class="input-group input-group-lg">
-	  		<input type="text" class="form-control" placeHolder="Search">
-	  		<span class="input-group-btn">          
-	        <button id="searchButton" class="btn btn-default" type="button">Go!</button>
+	  		<%= form_tag("/parsetest", method: "get") do %>
+              <%= label_tag(:searchTerm, "Search for:") %>
+              <%= text_field_tag(:searchTerm) %>
+              <%= submit_tag("Search") %>
+            <% end %>
 	      </span>                                      
 		  </div>                                       
 	    </div>                                         

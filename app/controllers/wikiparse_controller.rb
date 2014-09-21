@@ -97,7 +97,7 @@ class WikiparseController < ApplicationController
             end
                     
             for i in 0..SEARCH_LIMIT
-                print "\Largest Value: " + valueArray[i].to_s
+                print "\nLargest Value: " + searchArray[i].to_s + "\n"
                 Entry.create(:node => searchArray[i])
             end
         end
