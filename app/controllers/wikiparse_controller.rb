@@ -7,6 +7,15 @@ class WikiparseController < ApplicationController
         print(params[:searchTerm])
         print(inputURL)
         source = Net::HTTP.get(searchBuild(inputURL))
+        
+        if source.include? 'missing' or source == nil
+             redirect_to "/"
+
+        elsif source.include? '#REDIRECT'
+            searchString = rmDBrakets source[source.index('#REDIRECT')..-1]
+            source = redirect(searchString)
+        end
+        
         source = source.partition("==Notes==")[0]
         
         sourceHead = 0
@@ -24,12 +33,18 @@ class WikiparseController < ApplicationController
             elsif source[i] == ']' && source[i+1] == ']' #closing brace
                 sourceTail = i-1
                 currentEntry = source[sourceHead..sourceTail]
+                currentEntry = currentEntry.partition("|")[0]
+                currentEntry = currentEntry.partition("]")[0] #used to sanitize
+                currentEntry = currentEntry.partition("\\")[0]
+                currentEntry = currentEntry.partition("File")[0]
                 print "\nCurrent Entry: " + currentEntry + "\n"
                 currentEntryHits = entryHash[currentEntry]  #get current entry hits
-                if currentEntryHits == 0  #if hits == nil new entry
-                    entryHash[currentEntry] = 1
-                else
-                    entryHash[currentEntry] = (currentEntryHits.to_i + 1)  #elsif hits > 1 then increment value
+                if
+                    if currentEntryHits == 0  #if hits == nil new entry
+                        entryHash[currentEntry] = 1
+                    else
+                        entryHash[currentEntry] = (currentEntryHits.to_i + 1)  #elsif hits > 1 then increment value
+                    end
                 end
             end
         end
@@ -38,15 +53,6 @@ class WikiparseController < ApplicationController
         redirect_to "/"
     end
     
-    def searchForCallback(searchArray, valueArray)
-        for i in 0..searchArray.length
-            source = Net::HTTP.get(searchBuild(searchArray[i]))
-            if source.include? searchArray[i]
-                #create DB tuple for entry and valueArray[i]
-                print "*************CREATE DB TUPLE****************"
-            end
-        end        
-    end
     
     private
         
@@ -56,6 +62,24 @@ class WikiparseController < ApplicationController
             wikiURL = wikiURL.gsub " ", "%20" #replace whitespace with %20
             print "\nwikiURL: " + wikiURL + "\n"
             return URI(wikiURL)
+        end
+    
+        def redirect (searchString) 
+            return Net::HTTP.get(searchBuild(searchString))
+        end
+
+        #get the string inside the first [[]]
+        def rmDBrakets (str) 
+            return str[(str.index('[[')) + 2..(str.index(']]') - 1)]
+        end
+    
+        def searchForCallback(searchArray, valueArray)
+            for i in 0..searchArray.length-1
+                source = Net::HTTP.get(searchBuild(searchArray[i]))
+                if source.include? searchArray[i]
+                    #create DB tuple for entry and valueArray[i]
+                end
+            end        
         end
         
 end
