@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20140920225416) do
     t.datetime "updated_at"
   end
 
+  add_index "entries", ["node"], name: "node_index"
+
   create_table "relationships", force: true do |t|
     t.integer  "parent"
     t.integer  "child"
@@ -26,5 +28,8 @@ ActiveRecord::Schema.define(version: 20140920225416) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "relationships", ["parent", "child"], name: "child_parent_index"
+  add_index "relationships", ["type"], name: "type_index"
 
 end

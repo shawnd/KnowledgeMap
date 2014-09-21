@@ -1,6 +1,8 @@
 #Controller to parse wikipedia and determine subjects (their parents, and children)
 class WikiparseController < ApplicationController
     require 'net/http'
+    
+    SEARCH_LIMIT = 5
 
     def parseSearch
         inputURL = params[:searchTerm]
@@ -60,7 +62,6 @@ class WikiparseController < ApplicationController
             #wikiURL = "http://en.wikipedia.org/w/index.php?title=" << searchString << "&action=edit"
             wikiURL = 'http://en.wikipedia.org/w/api.php?format=json&action=query&titles=' + searchString + '&prop=revisions&rvprop=content'
             wikiURL = wikiURL.gsub " ", "%20" #replace whitespace with %20
-            print "\nwikiURL: " + wikiURL + "\n"
             return URI(wikiURL)
         end
     
@@ -74,7 +75,9 @@ class WikiparseController < ApplicationController
         end
     
         def searchForCallback(searchArray, valueArray)
-            for i in 0..searchArray.length-1
+            len = searchArray.length
+            
+            for i in 0..(len-1)
                 source = Net::HTTP.get(searchBuild(searchArray[i]))
                 if source.include? searchArray[i]
                     #create DB tuple for entry and valueArray[i]
