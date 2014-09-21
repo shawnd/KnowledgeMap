@@ -4,31 +4,38 @@
 @import 'bootstrap';
 
 
+
+/*background-color*/
 #homePage{
-	font-size: 60px;
-
+	background-color: #82DC82;
 }
 
-#homeBody{
-	background-image: url('space_map_hd_wallpaper_1_by_jordanb29-d67r9sn.jpg');
-}
 
 /*Section*/
-#logoMark{
-	font-family: "Crafty Girls", "Serif";
-	font-size: 1.1em;
+
+nav {
+/*	background-color: #009933;*/
+	min-height: 60px;
+}
+
+
+#logo{
+	margin: 180px 0 0 0;
+}
+
+#logoText{
+	font-family: 'Pacifico', cursive;
+	font-size: 6em;
+	color: white;
 	text-align: center;
 }
 
-#logo{
-	margin: 230px 0 0 0;
+
+#search{
+	padding: 40px 0 0 0;
 }
 
-#searchBar{
-	padding: 10px 0 0 0;
-}
 
-/*Search Bar*/
 #searchField {
 	width: 30%;
 	padding: 0;
@@ -36,5 +43,21 @@
 }
 
 #searchButton{
-	background-color: #82DC82;
+	background-color: white;
 }
+
+footer {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+
+footer, li {
+	display: inline-block;
+	float: right;
+	font-size: 1.5em;
+	color: white;
+}
+
