@@ -18,15 +18,20 @@
 	  	    <h1 id="logoText">KnowledgeMap</h1>
 	  	</div>
 	    
-	    <div id="search">
-	      <div id="searchField" class="input-group input-group-lg">
-	  		<%= form_tag("/parsetest", method: "get") do %>
-              <%= label_tag(:searchTerm, "Search for:") %>
+    <div id="search">
+	      
+        <div id="searchField"> 
+	  		
+        <%= form_tag("/parsetest", method: "get", :class => "input-group input-group-lg") do %>
+              <%= label_tag(:searchTerm, "") %>
+
               <%= text_field_tag(:searchTerm) %>
-              <%= submit_tag("Search") %>
+              <%= submit_tag("Go!", :class => "btn btn-default") %>
+
             <% end %>
-	      </span>                                      
-		  </div>                                       
+
+                                      
+		  </div>                                        
 	    </div>                                         
   	</section>                                         
                                                        
