@@ -11,11 +11,10 @@ class WikiparseController < ApplicationController
         source = Net::HTTP.get(searchBuild(inputURL))
         
         if source.include? 'missing' or source == nil
-             redirect_to "/"
 
         elsif source.include? '#REDIRECT'
             searchString = rmDBrakets source[source.index('#REDIRECT')..-1]
-            source = redirect(searchString)
+            source = redirectWiki(searchString)
         end
         
         source = source.partition("==Notes==")[0]
@@ -39,9 +38,10 @@ class WikiparseController < ApplicationController
                 currentEntry = currentEntry.partition("]")[0] #used to sanitize
                 currentEntry = currentEntry.partition("\\")[0]
                 currentEntry = currentEntry.partition("File")[0]
+                currentEntry.gsub "Category:", ""
                 print "\nCurrent Entry: " + currentEntry + "\n"
                 currentEntryHits = entryHash[currentEntry]  #get current entry hits
-                if
+                if currentEntry != ''
                     if currentEntryHits == 0  #if hits == nil new entry
                         entryHash[currentEntry] = 1
                     else
@@ -65,7 +65,7 @@ class WikiparseController < ApplicationController
             return URI(wikiURL)
         end
     
-        def redirect (searchString) 
+        def redirectWiki (searchString) 
             return Net::HTTP.get(searchBuild(searchString))
         end
 
@@ -74,15 +74,36 @@ class WikiparseController < ApplicationController
             return str[(str.index('[[')) + 2..(str.index(']]') - 1)]
         end
     
-        def searchForCallback(searchArray, valueArray)
+        def searchForCallback(searchArray, valueArray)  
             len = searchArray.length
+            largestKeys = Array.new #array storing largest value keys
+            keysLeft = SEARCH_LIMIT #how many of the largest keys left to find
+            max = 0 #largest array item
             
-            for i in 0..(len-1)
-                source = Net::HTTP.get(searchBuild(searchArray[i]))
-                if source.include? searchArray[i]
-                    #create DB tuple for entry and valueArray[i]
-                end
-            end        
+            while keysLeft > 0 && keysLeft < len
+                for i in 0..len
+                    if valueArray[i].to_i > valueArray[max].to_i
+                        max = i
+                    end
+                end #max = largest index in array
+                largestKeys.insert(0, searchArray[max])
+                valueArray[max] = 0
+                keysLeft -= 1
+                max = 0
+            end
+                    
+            print "LARGEST: " + largestKeys[0].to_s
+            print "LARGEST: " + largestKeys[1].to_s
+            print "LARGEST: " + largestKeys[2].to_s
+            print "LARGEST: " + largestKeys[3].to_s
+            print "LARGEST: " + largestKeys[4].to_s
+            #limit to SEARCH_LIMIT
+            
+#            for i in 0..(len.to_i-1)
+#                source = Net::HTTP.get(searchBuild(searchArray[i]))
+#                if source.include? searchArray[i]
+#                end
+#            end        
         end
         
 end
