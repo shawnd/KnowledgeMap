@@ -39,7 +39,7 @@ gem 'bootstrap-sass'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
-
+gem install sqlite3 -v '1.3.9'
 group :production do
   gem 'pg'
 gem 'rails_12factor'
