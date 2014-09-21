@@ -49,6 +49,11 @@ class WikiparseController < ApplicationController
             end
         end        
     end
+
+    # Method to return all text before the String match
+    def searchBeforeMatch(searchArray, match)
+        searchArray.partition(match)[0];
+    end
         
 end
     
