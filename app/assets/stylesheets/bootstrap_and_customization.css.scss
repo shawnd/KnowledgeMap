@@ -1,0 +1,40 @@
+// Place all the styles related to the pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'bootstrap';
+
+
+#homePage{
+	font-size: 60px;
+
+}
+
+#homeBody{
+	background-image: url('space_map_hd_wallpaper_1_by_jordanb29-d67r9sn.jpg');
+}
+
+/*Section*/
+#logoMark{
+	font-family: "Crafty Girls", "Serif";
+	font-size: 1.1em;
+	text-align: center;
+}
+
+#logo{
+	margin: 230px 0 0 0;
+}
+
+#searchBar{
+	padding: 10px 0 0 0;
+}
+
+/*Search Bar*/
+#searchField {
+	width: 30%;
+	padding: 0;
+	margin: 0 35% 0 35%;
+}
+
+#searchButton{
+	background-color: #82DC82;
+}
