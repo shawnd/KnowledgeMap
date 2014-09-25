@@ -6,8 +6,8 @@ class WikiparseController < ApplicationController
 
     def parseSearch
         inputURL = params[:searchTerm]
-        print(params[:searchTerm])
-        print(inputURL)
+        #print(params[:searchTerm])
+        #print(inputURL)
         source = Net::HTTP.get(searchBuild(inputURL))
         
         if source.include? 'missing' or source == nil
@@ -42,7 +42,8 @@ class WikiparseController < ApplicationController
                 currentEntry = currentEntry.partition("\\")[0]
                 currentEntry = currentEntry.partition("File")[0]
                 currentEntry.gsub "Category:", ""
-                print "\nCurrent Entry: " + currentEntry + "\n"
+                currentEntry.gsub "(disambiguous)", "(category)"
+                #print "\nCurrent Entry: " + currentEntry + "\n"
                 currentEntryHits = entryHash[currentEntry]  #get current entry hits
                 if currentEntry != ''
                     if currentEntryHits == 0  #if hits == nil new entry
@@ -53,7 +54,7 @@ class WikiparseController < ApplicationController
                 end
             end
         end
-        parent = Entry.create(:node => searchString)
+        #parent = Entry.create(:node => searchString)
         searchForCallback(entryHash.keys, entryHash.values)
         #for every hash entry we want to get and search the related page for an entry back to the original page (if found then store in DB)
         redirect_to "/"
@@ -79,24 +80,26 @@ class WikiparseController < ApplicationController
         end
     
         def searchForCallback(searchArray, valueArray)  
-            len = searchArray.length
+            print searchArray
+            print valueArray
             largestKeys = Array.new #array storing largest value keys
-            keysLeft = SEARCH_LIMIT #how many of the largest keys left to find
+            keysLeft = SEARCH_LIMIT - 1 #how many of the largest keys left to find
             max = 0 #largest array item
 
-            while keysLeft > 0 && keysLeft < len
-                for i in 0..len
+            while keysLeft > 0 && keysLeft < searchArray.length
+                max = 0
+                for i in 1..searchArray.length
                     if valueArray[i].to_i > valueArray[max].to_i
                         max = i
                     end
-                end #max = largest index in array
-                largestKeys.insert(0, searchArray[max])
-                valueArray[max] = 0
+                end
+                largestKeys.push(searchArray[max])
+                searchArray.delete_at(max)
+                valueArray.delete_at(max)
                 keysLeft -= 1
-                max = 0
             end
                     
-            for i in 0..SEARCH_LIMIT
+            for i in largestKeys.length.to_i.downto(0)
                 print "\nLargest Value: " + searchArray[i].to_s + "\n"
                 #Entry.create(:node => searchArray[i])
             end

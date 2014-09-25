@@ -11,20 +11,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140920225416) do
-
-  create_table "entries", force: true do |t|
-    t.string   "node"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "relationships", force: true do |t|
-    t.integer  "parent"
-    t.integer  "child"
-    t.string   "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 0) do
 
 end
